@@ -12,7 +12,7 @@ describe("Console Test", () => {
 
     expect(consoleLogSpy).toHaveBeenCalled();
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      expect.stringContaining(`[INFO] ${"Hello World"}`)
+      expect.stringContaining(`(default) [INFO] ${"Hello World"}`)
     );
   });
 });
