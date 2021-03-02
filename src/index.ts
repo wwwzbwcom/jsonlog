@@ -22,7 +22,7 @@ export class Logger {
     };
   }
 
-  log(logData: Log) {
+  private _log(logData: Log) {
     if (this.options.middlewares) {
       for (const m of this.options.middlewares) {
         m({
@@ -41,23 +41,23 @@ export class Logger {
   }
 
   trace(logData: Log) {
-    this.log({ ...logData, level: "TRACE" });
+    this._log({ ...logData, level: "TRACE" });
   }
 
   debug(logData: Log) {
-    this.log({ ...logData, level: "DEBUG" });
+    this._log({ ...logData, level: "DEBUG" });
   }
 
   warn(logData: Log) {
-    this.log({ ...logData, level: "WARN" });
+    this._log({ ...logData, level: "WARN" });
   }
 
   info(logData: Log) {
-    this.log({ ...logData, level: "INFO" });
+    this._log({ ...logData, level: "INFO" });
   }
 
   error(logData: Log) {
-    this.log({ ...logData, level: "ERROR" });
+    this._log({ ...logData, level: "ERROR" });
   }
 }
 
