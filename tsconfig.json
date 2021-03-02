@@ -1,13 +1,12 @@
 {
-    "compilerOptions": {
-      "target": "es2018",
-      "module": "commonjs",
-      "declaration": true,
-      "strict": true,
-      "noImplicitAny": true,
-      "rootDir": "./src",
-      "outDir": "./lib"
-    },
-    "exclude": ["test", "lib"]
-  }
-  
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "rootDir": "./src",
+    "outDir": "./lib"
+  },
+  "exclude": ["test", "lib"]
+}

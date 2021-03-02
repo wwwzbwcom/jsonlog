@@ -1,22 +1,43 @@
-type Log = {
+export * from './middlewares';
+
+export type Log = {
   level?: "TRACE" | "DEBUG" | "INFO" | "WARN" | "ERROR";
   msg?: string;
+  time?: string | Date;
+  name?: string;
 } & Record<string, any>;
 
 export interface LoggerOptions {
-  logProcessor?: (log: Log) => any;
+  name?: string;
+  middlewares?: ((log: Log) => any)[];
 }
 
 export class Logger {
   options: LoggerOptions;
 
   constructor(options: LoggerOptions = {}) {
-    this.options = options;
+    this.options = {
+      name: options.name ?? "default",
+      middlewares: options.middlewares,
+    };
   }
+
   log(logData: Log) {
-    if (this.options.logProcessor) {
-      this.options.logProcessor(logData);
+    if (this.options.middlewares) {
+      for (const m of this.options.middlewares) {
+        m({
+          ...this.generateData(),
+          ...logData,
+        });
+      }
     }
+  }
+
+  generateData() {
+    return {
+      time: new Date(),
+      name: this.options.name,
+    };
   }
 
   trace(logData: Log) {
@@ -40,7 +61,8 @@ export class Logger {
   }
 }
 
-export function getLogger(name: string = "default", options: LoggerOptions = {}) {
+export function getLogger(options: LoggerOptions = {}) {
+  const name = options.name ?? "default";
   const g: { jsonlog?: Record<string, Logger> } = (global ?? window) as any;
   if (!g.jsonlog) {
     g.jsonlog = {};
